@@ -1,0 +1,25 @@
+{
+    "name": "oskingv/laravel-http-query-logger",
+    "description": "HTTP query logger for Laravel",
+    "keywords": ["laravel", "logger"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vlad Oskin",
+            "email": "oskinvv95@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Oskingv\\HttpQueryLogger\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Oskingv\\HttpQueryLogger\\Providers\\HttpQueryLoggerServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}
