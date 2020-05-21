@@ -23,7 +23,7 @@ class Notification extends Mailable
      */
     public function __construct(array $fields)
     {
-        $this->fields = $fields;
+        $this->fields['fields'] = $fields;
     }
 
     /**
