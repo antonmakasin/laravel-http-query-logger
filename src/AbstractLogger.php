@@ -110,7 +110,9 @@ abstract class AbstractLogger
         $this->logs['models'] = $models;
         $this->logs['ip'] = $request->ip();
 
-        $this->sendEmailNotification($codeFirstNumber, $this->logs);
+        if (config('http-query-logger.email_notification')) {
+            $this->sendEmailNotification($codeFirstNumber, $this->logs);
+        }
 
         return $this->logs;
     }
