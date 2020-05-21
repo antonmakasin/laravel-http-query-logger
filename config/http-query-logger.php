@@ -9,6 +9,8 @@ return [
     'client_errors' => env('HTTP_QUERY_LOGGER_CLIENT_ERRORS', true),
     'server_errors' => env('HTTP_QUERY_LOGGER_SERVER_ERRORS', true),
     'admin_middleware' => env('HTTP_QUERY_LOGGER_ADMIN_MIDDLEWARE', 'web,auth'),
+    'email_notification' => env('HTTP_QUERY_LOGGER_EMAIL_NOTIFICATION', false),
+    'email_notification_address' => env('HTTP_QUERY_LOGGER_EMAIL_NOTIFICATION_ADDRESS', 'attention@change.me'),
     'dont_log' => [
         'password',
         'password_confirmation',
