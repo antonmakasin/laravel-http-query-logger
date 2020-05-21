@@ -62,9 +62,8 @@ class FileLogger extends AbstractLogger implements LoggerInterface
      */
     public function saveLogs($request, $response)
     {
-        if ($this->checkCodes($response->status())) {
-            $data = $this->logData($request, $response);
-
+        $data = $this->logData($request, $response);
+        if ($data !== null) {
             $filename = $this->getLogFilename();
 
             $contents = implode(";", $data);

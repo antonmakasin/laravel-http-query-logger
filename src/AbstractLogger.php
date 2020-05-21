@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use Oskingv\HttpQueryLogger\Mail\Notification;
 
 abstract class AbstractLogger
 {
@@ -17,8 +19,14 @@ abstract class AbstractLogger
 
     protected $codes = [];
 
+    protected $error_codes_first_number = [];
+
     public function __construct()
     {
+        $this->error_codes_first_number = [
+            '4',
+            '5'
+        ];
         $this->boot();
         $this->codes = [
             '1' => config('http-query-logger.informational_responses', true),
@@ -43,14 +51,22 @@ abstract class AbstractLogger
             }
         });
     }
+
     /**
      * logs into associative array
      *
-     * @param  $request
-     * @param  $response
-     * @return array
+     * @param $request
+     * @param $response
+     * @return array|null
      */
     public function logData($request,$response){
+
+        $codeFirstNumber = $this->checkCode($response->status());
+
+        if($codeFirstNumber === '') {
+            return null;
+        }
+
         $currentRouteAction = Route::currentRouteAction();
 
         // Initialiaze controller and action variable before use them
@@ -93,6 +109,8 @@ abstract class AbstractLogger
         $this->logs['action'] = $action;
         $this->logs['models'] = $models;
         $this->logs['ip'] = $request->ip();
+
+        $this->sendEmailNotification($codeFirstNumber, $this->logs);
 
         return $this->logs;
     }
@@ -139,15 +157,27 @@ abstract class AbstractLogger
     /**
      * @param string $code
      *
-     * @return bool
+     * @return array
      */
-    protected function checkCodes(string $code): bool
+    private function checkCode(string $code): string
     {
         if (empty($code)) {
-            return true;
+            return '';
         }
-        $codesFirstNumber = array_keys ($this->codes, true);
+        $codesFirstNumber = array_keys($this->codes, true);
         $codeFirstNumber = $code[0];
-        return in_array($codeFirstNumber, $codesFirstNumber) ? true : false;
+        return in_array($codeFirstNumber, $codesFirstNumber) ? $codeFirstNumber : '';
+    }
+
+    /**
+     * @param string $codeFirstNumber
+     * @param array $data
+     */
+    private function sendEmailNotification(string $codeFirstNumber, array $data): void
+    {
+        if (in_array($codeFirstNumber, $this->error_codes_first_number)) {
+            Mail::to(config('http-query-logger.email_notification_address', 'attention@change.me'))
+                ->send(new Notification($data));
+        }
     }
 }

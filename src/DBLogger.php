@@ -32,9 +32,8 @@ class DBLogger extends AbstractLogger implements LoggerInterface
      */
     public function saveLogs($request,$response)
     {
-        if ($this->checkCodes($response->status())) {
-            $data = $this->logData($request,$response);
-
+        $data = $this->logData($request,$response);
+        if ($data !== null) {
             $this->logger->fill($data);
 
             $this->logger->save();
