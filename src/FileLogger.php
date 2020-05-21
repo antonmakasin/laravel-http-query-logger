@@ -86,7 +86,7 @@ class FileLogger extends AbstractLogger implements LoggerInterface
         // original default filename
         $filename = 'http-query-'.date('d-m-Y') . '.log';
 
-        $configFilename = config('http-query-logger.filename');
+        $configFilename = config('http-query-logger.filename', 'log-{Y-m-d}.log');
         preg_match('/{(.*?)}/', $configFilename, $matches, PREG_OFFSET_CAPTURE);
         if (sizeof($matches) > 0) {
             $filename = str_replace($matches[0][0], date("{$matches[1][0]}"), $configFilename);

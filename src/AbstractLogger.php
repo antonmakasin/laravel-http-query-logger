@@ -21,11 +21,11 @@ abstract class AbstractLogger
     {
         $this->boot();
         $this->codes = [
-            '1' => config('http-query-logger.informational_responses'),
-            '2' => config('http-query-logger.successful_responses'),
-            '3' => config('http-query-logger.redirects'),
-            '4' => config('http-query-logger.client_errors'),
-            '5' => config('http-query-logger.server_errors'),
+            '1' => config('http-query-logger.informational_responses', true),
+            '2' => config('http-query-logger.successful_responses', true),
+            '3' => config('http-query-logger.redirects', true),
+            '4' => config('http-query-logger.client_errors', true),
+            '5' => config('http-query-logger.server_errors', true),
         ];
     }
     /**

@@ -19,7 +19,7 @@ class LogController extends Controller
      */
     public function __construct()
     {
-        $adminMiddleware = config('http-query-logger.admin_middleware');
+        $adminMiddleware = config('http-query-logger.admin_middleware', 'web,auth');
         if ($adminMiddleware) {
             $adminMiddlewareArray = explode(',', $adminMiddleware);
             foreach ($adminMiddlewareArray as $middleware) {

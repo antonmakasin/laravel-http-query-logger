@@ -42,7 +42,7 @@ class HttpQueryLoggerServiceProvider extends ServiceProvider
     }
 
     public function bindServices(){
-        $driver = config('http-query-logger.driver');
+        $driver = config('http-query-logger.driver', 'file');
         $instance = "";
         switch ($driver) {
             case 'file':
