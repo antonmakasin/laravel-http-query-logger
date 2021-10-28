@@ -8,7 +8,7 @@ request method, url, duration, request payload, which models are retrieved, cont
 1. Install the package via composer
 
 ```bash
-composer require oskingv/laravel-http-query-logger
+composer require antonmakasin/laravel-http-query-logger
 ```
 ## Usage
 

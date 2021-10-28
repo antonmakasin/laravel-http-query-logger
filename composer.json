@@ -1,5 +1,5 @@
 {
-    "name": "oskingv/laravel-http-query-logger",
+    "name": "antonmakasin/laravel-http-query-logger",
     "description": "HTTP query logger for Laravel",
     "keywords": ["laravel", "logger"],
     "license": "MIT",
