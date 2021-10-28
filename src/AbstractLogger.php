@@ -61,7 +61,9 @@ abstract class AbstractLogger
      */
     public function logData($request,$response){
 
-        $codeFirstNumber = $this->checkCode($response->status());
+        // Symfony\Component\HttpFoundation\BinaryFileResponse (downloading file) doesn't have method status
+        $responseStatus = method_exists($response, 'status') ? $response->status() : '';
+        $codeFirstNumber = $this->checkCode($responseStatus);
 
         if($codeFirstNumber === '') {
             return null;
